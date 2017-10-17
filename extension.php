@@ -140,10 +140,9 @@ EOT;
       foreach ($result['values'] as $key => $value) {
         $content .=<<<EOT
           <tr>
-          <td> {$value['membership_name']} </td>
-          <td> {$value['start_date']} </td>
-          <td> {$value['end_date']} </td>
-
+            <td><div class="crm-summary-row"> {$value['membership_name']}</div></td>
+            <td><div class="crm-summary-row"> {$value['start_date']}  </div></td>
+            <td><div class="crm-summary-row"> {$value['end_date']}  </div></td>
           </tr>
 
 EOT;
