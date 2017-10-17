@@ -73,102 +73,101 @@ EOT;
 
 
 
- function show_memberships( $contactID ) {
- 
-    watchdog('marsh', 'showing memberships');
-   // SQL to query "is display_memberships set"
-   $membSql = "
-     SELECT value  
-     FROM civicrm_extension_settings 
-     WHERE name  = %1 
-       AND value = %2";
- 
-   // run query 
-   $membDAO = CRM_Core_DAO::executeQuery($membSql, array(
-     '1' => array('display_memberships', 'String'),
-     '2' => array(1, 'Integer')
-     ));
- 
- 
-   // if there was a result, display the section
-   if ($membDAO->fetch()) {
- 
-     // api call...
-     $result = civicrm_api3('Membership', 'get', array(
-           'sequential' => 1,
-           'status_id.name' => array('IN' => array("New", "Current", "Grace")),
-           'contact_id' => $contactID,
-           ));
- 
-     CRM_Core_Error::debug_log_message( 'Got Memberships: ' . print_r( $result, TRUE ));
- 
-    
+function show_memberships( $contactID ) {
+
+  watchdog('marsh', 'showing memberships');
+  // SQL to query "is display_memberships set"
+  $membSql = "
+    SELECT value  
+    FROM civicrm_extension_settings 
+    WHERE name  = %1 
+    AND value = %2";
+
+  // run query 
+  $membDAO = CRM_Core_DAO::executeQuery($membSql, array(
+        '1' => array('display_memberships', 'String'),
+        '2' => array(1, 'Integer')
+        ));
+
+
+  // if there was a result, display the section
+  if ($membDAO->fetch()) {
+
+    // api call...
+    $result = civicrm_api3('Membership', 'get', array(
+          'sequential' => 1,
+          'status_id.name' => array('IN' => array("New", "Current", "Grace")),
+          'contact_id' => $contactID,
+          ));
+
+    CRM_Core_Error::debug_log_message( 'Got Memberships: ' . print_r( $result, TRUE ) . print_r( $contactID, TRUE));
+
+
     // skip if there are no Memberships to show
-     if ( $result['count'] > 0 ) {
-       $columns = array(
-           'membership_name' => "Membership Type",
-           'start_date' => 'Start Date',
-           'end_date' => 'End Date'
-           );
-     }
- 
-     // create the HTML section
-     $content =<<<EOT
-       <div id="membership-summary">
-       <h3 class="crm_header"> Current Memberships </h3>
-       <table>
- 
+    if ( $result['count'] > 0 ) {
+      $columns = array(
+          'membership_name' => "Membership Type",
+          'start_date' => 'Start Date',
+          'end_date' => 'End Date'
+          );
+
+      // create the HTML section
+      $content =<<<EOT
+        <div id="membership-summary">
+        <h3 class="crm_header"> Current Memberships </h3>
+        <table>
 
 
+
 EOT;
-     foreach ( $result['values'] as $key => $value) { $content .=<<<EOT
-       <tr>
- 
+      foreach ( $result['values'] as $key => $value) { $content .=<<<EOT
+        <tr>
+
 EOT;
-       // row headers
-       foreach ( $columns as $key => $value) { $content .=<<<EOT
-         <th>{$value}</th>
- 
+        // row headers
+        foreach ( $columns as $key => $value) { $content .=<<<EOT
+          <th>{$value}</th>
+
 EOT;
-       }
-       // end of row
-       $content .=<<<EOT
-         </tr>
- 
+        }
+        // end of row
+        $content .=<<<EOT
+          </tr>
+
 EOT;
-     }
-     // membership rowa
-     foreach ($result['values'] as $key => $value) {
-       $content .=<<<EOT
-         <tr>
-         <td> {$value['membership_name']} </td>
-         <td> {$value['start_date']} </td>
-         <td> {$value['end_date']} </td>
- 
-         </tr>
- 
+      }
+      // membership rowa
+      foreach ($result['values'] as $key => $value) {
+        $content .=<<<EOT
+          <tr>
+          <td> {$value['membership_name']} </td>
+          <td> {$value['start_date']} </td>
+          <td> {$value['end_date']} </td>
+
+          </tr>
+
 EOT;
-       CRM_Core_Error::debug_log_message( 'debugging: Membership type: ' . print_r( $value['membership_name'], TRUE ));
- 
-     }
- 
-     // close the HTML section (from opening above)
-     $content .=<<<EOT
-       </tr>
-       </table>
-       </div>
- 
+        CRM_Core_Error::debug_log_message( 'marsh: Membership type: ' . print_r( $value['membership_name'], TRUE ));
+
+      }
+
+      // close the HTML section (from opening above)
+      $content .=<<<EOT
+        </tr>
+        </table>
+        </div>
+
 EOT;
- 
- 
-     CRM_Core_Error::debug_log_message( 'debugging: HTML: ' . print_r( $content, TRUE ));
- 
-     return $content;
-   }
- }
- 
 
 
+      CRM_Core_Error::debug_log_message( 'marsh: HTML: ' . print_r( $content, TRUE ));
+
+      return $content;
+    }
+  }
+
+
+}
 
 
 

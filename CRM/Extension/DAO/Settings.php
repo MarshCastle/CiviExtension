@@ -37,13 +37,13 @@ require_once 'CRM/Utils/Type.php';
 /**
  * CRM_Core_DAO_Setting constructor.
  */
-class CRM_Extension_DAO_Setting extends CRM_Core_DAO {
+class CRM_Extension_DAO_Settings extends CRM_Core_DAO {
   /**
    * Static instance to hold the table name.
    *
    * @var string
    */
-  static $_tableName = 'civicrm_setting';
+  static $_tableName = 'civicrm_extension_settings';
   /**
    * Should CiviCRM log any modifications to this table in the civicrm_log table.
    *
@@ -107,7 +107,7 @@ class CRM_Extension_DAO_Setting extends CRM_Core_DAO {
    * Class constructor.
    */
   function __construct() {
-    $this->__table = 'civicrm_setting';
+    $this->__table = 'civicrm_extension_settings';
     parent::__construct();
   }
   /**
@@ -140,110 +140,32 @@ class CRM_Extension_DAO_Setting extends CRM_Core_DAO {
           'type' => CRM_Utils_Type::T_INT,
           'title' => ts('Setting ID') ,
           'required' => true,
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
+          'table_name' => 'civicrm_training_settings',
         ) ,
         'name' => array(
           'name' => 'name',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Setting Name') ,
           'description' => 'Unique name for setting',
-          'maxlength' => 255,
-          'size' => CRM_Utils_Type::HUGE,
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
+          'maxlength' => 64,
+          'size' => CRM_Utils_Type::BIG,
+          'table_name' => 'civicrm_extension_setting',
           'localizable' => 0,
+          'html' => array(
+            'type' => 'Text',
+          )
         ) ,
         'value' => array(
           'name' => 'value',
-          'type' => CRM_Utils_Type::T_TEXT,
+          'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Value') ,
-          'description' => 'data associated with this group / name combo',
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
+          'description' => 'Boolean Value',
+          'size' => CRM_Utils_Type::BIG,
+          'table_name' => 'civicrm_extension_setting',
           'localizable' => 0,
-        ) ,
-        'domain_id' => array(
-          'name' => 'domain_id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Setting Domain') ,
-          'description' => 'Which Domain is this menu item for',
-          'required' => true,
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
-          'FKClassName' => 'CRM_Core_DAO_Domain',
-          'pseudoconstant' => array(
-            'table' => 'civicrm_domain',
-            'keyColumn' => 'id',
-            'labelColumn' => 'name',
-          )
-        ) ,
-        'contact_id' => array(
-          'name' => 'contact_id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Setting Contact') ,
-          'description' => 'FK to Contact ID if the setting is localized to a contact',
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
-          'FKClassName' => 'CRM_Contact_DAO_Contact',
-        ) ,
-        'is_domain' => array(
-          'name' => 'is_domain',
-          'type' => CRM_Utils_Type::T_BOOLEAN,
-          'title' => ts('Is Domain Setting?') ,
-          'description' => 'Is this setting a contact specific or site wide setting?',
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
-        ) ,
-        'component_id' => array(
-          'name' => 'component_id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Setting Component') ,
-          'description' => 'Component that this menu item belongs to',
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
-          'FKClassName' => 'CRM_Core_DAO_Component',
           'html' => array(
-            'type' => 'Select',
-          ) ,
-          'pseudoconstant' => array(
-            'table' => 'civicrm_component',
-            'keyColumn' => 'id',
-            'labelColumn' => 'name',
+            'type' => 'Text',
           )
-        ) ,
-        'created_date' => array(
-          'name' => 'created_date',
-          'type' => CRM_Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
-          'title' => ts('Setting Created Date') ,
-          'description' => 'When was the setting created',
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
-        ) ,
-        'created_id' => array(
-          'name' => 'created_id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Setting Created By') ,
-          'description' => 'FK to civicrm_contact, who created this setting',
-          'table_name' => 'civicrm_setting',
-          'entity' => 'Setting',
-          'bao' => 'CRM_Core_BAO_Setting',
-          'localizable' => 0,
-          'FKClassName' => 'CRM_Contact_DAO_Contact',
         ) ,
       );
       CRM_Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);

@@ -10,17 +10,18 @@ use CRM_Extension_ExtensionUtil as E;
 class CRM_Extension_Form_SummarySettings extends CRM_Core_Form {
   public function buildQuickForm() {
 
+
     // add form elements
     $this->add(
         'checkbox', // field type
-        'contributions_summary_display', // field name
-        ts('Contributions in Summary') // field label
+        'display_memberships', // field name
+        ts('Memberships in Summary') // field label
         );
 
     $this->add(
         'checkbox', // field type
-        'memberships_summary_display', // field name
-        ts('Memberships in Summary') // field label
+        'display_contributions', // field name
+        ts('Contributions in Summary') // field label
         );
 
 
@@ -35,13 +36,18 @@ class CRM_Extension_Form_SummarySettings extends CRM_Core_Form {
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
     parent::buildQuickForm();
-  }
+
+}
+
+
 
   public function postProcess() {
-    $params = $this->controller->exportValues($this->name);
+    $params = $this->controller->exportValues($this->_name) ;
+    CRM_Core_Error::debug_log_message('marsh: ' . print_r($this->_name, TRUE));
     foreach (array(
+          'display_contributions',
           'display_memberships', 
-          'display_contributions') 
+          ) 
         as $field) {
       $daoparam = array();
       $daoparam['name'] = $field;
@@ -49,6 +55,7 @@ class CRM_Extension_Form_SummarySettings extends CRM_Core_Form {
       $daoparam['value'] = (int) CRM_UTILS_Array::value($field, $params);
       CRM_Core_Error::debug_log_message('after CRM_Utils_Array::' . print_r($daoparam, TRUE));
       CRM_Extension_BAO_Settings::create($daoparam);
+      CRM_Core_Error::debug_log_message('marsh: saved: ' . print_r($daoparam, TRUE));
       CRM_Core_Session::setStatus(ts('Settings saved.'));
     }
   }
