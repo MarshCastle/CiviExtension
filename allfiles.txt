@@ -1,0 +1,26 @@
+.
+├── allfiles.txt
+├── build
+├── CRM
+│   └── Extension
+│       ├── Form
+│       │   └── SummarySettings.php
+│       ├── Upgrader
+│       │   └── Base.php
+│       └── Upgrader.php
+├── extension.civix.php
+├── extension.php
+├── info.xml
+├── LICENSE.txt
+├── sql
+│   └── auto_install.sql
+├── templates
+│   └── CRM
+│       └── Extension
+│           └── Form
+│               └── SummarySettings.tpl
+└── xml
+    └── Menu
+        └── extension.xml
+
+12 directories, 11 files
