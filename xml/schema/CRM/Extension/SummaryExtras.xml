@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Extension</base>
+  <class>SummaryExtras</class>
+  <name>civicrm_extension_settings</name>
+  <comment>Summary Extras</comment>
+  <add>4.4</add>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique SummaryExtras ID</comment>
+    <add>4.4</add>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>name</name>
+    <title>Name</title>
+    <type>varchar</type>
+    <comment>Name of the Setting</comment>
+    <add>4.4</add>
+  </field>
+
+  <field>
+    <name>value</name>
+    <title>Value</title>
+    <type>boolean</type>
+    <table>Value of the Setting</table>
+    <add>4.4</add>
+  </field>
+</table>
